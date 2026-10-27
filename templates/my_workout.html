@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Workout</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+    <header>
+        <h1>My Workout</h1>
+        <p>Your custom workout</p>
+    </header>
+
+    <main>
+
+        <a href="{{ url_for('workout') }}">
+            ← Choose More Exercises
+        </a>
+
+        <h2>My Exercises</h2>
+
+        {% if exercises %}
+
+        <form action="{{ url_for('save_workout') }}" method="POST">
+
+            <div class="exercise-list">
+
+                {% for exercise in exercises %}
+
+                <div class="exercise">
+
+                    <h3>{{ exercise["name"] }}</h3>
+
+                    <p>
+                        <strong>Muscle:</strong>
+                        {{ exercise["primary_muscle"] }}
+                    </p>
+
+                    <label>
+                        Sets:
+                        <input
+                            type="number"
+                            name="sets_{{ exercise['id'] }}"
+                            min="1"
+                            value="{{ sets_reps.get(exercise['id']|string, {}).get('sets', 3) }}"
+                        >
+                    </label>
+
+                    <br><br>
+
+                    <label>
+                        Reps:
+                        <input
+                            type="number"
+                            name="reps_{{ exercise['id'] }}"
+                            min="1"
+                            value="{{ sets_reps.get(exercise['id']|string, {}).get('reps', 10) }}"
+                        >
+                    </label>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+            <button type="submit">
+                Save Workout
+            </button>
+
+        </form>
+
+        {% for exercise in exercises %}
+
+        <form
+            action="{{ url_for('remove_from_workout', exercise_id=exercise['id']) }}"
+            method="POST">
+
+            <button type="submit">
+                Remove {{ exercise["name"] }}
+            </button>
+
+        </form>
+
+        {% endfor %}
+
+        {% else %}
+
+        <p>You haven't added any exercises yet.</p>
+
+        <a href="{{ url_for('workout') }}">
+            Choose Exercises
+        </a>
+
+        {% endif %}
+
+        <h2>Send My Workout to Gmail</h2>
+
+<form action="{{ url_for('send_workout_email') }}" method="POST">
+
+                <label>
+                    Gmail address:
+                    <input
+                    type="email"
+                    name="email"
+                    placeholder="you@gmail.com"
+                    required
+                    >
+                </label>
+
+            <button type="submit">
+                Send Workout
+            </button>
+
+        </form>
+    </main>
+
+</body>
+
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Gym Buh-Dy</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <header>
+        <div class="logo-container">
+    <img
+        src="{{ url_for('static', filename='images/logo.jpg') }}"
+        alt="Gym Buh-Dy Logo"
+        class="site-logo"
+    >
+    <h1>Gym Buh-Dy</h1>
+</div>
+        <p>Your exercise and workout reference</p>
+    </header>
+
+    <main>
+            <a href="{{ url_for('my_workout') }}" class="workout-button">
+                 My Workout
+            </a>
+        <h2>Choose a Muscle Group</h2>
+
+        <div class="categories">
+
+            {% for category in categories %}
+
+                
+<a href="{{ url_for('category_exercises', category_id=category['id']) }}"
+   class="category"
+   style="background-image: url('{{ url_for('static', filename='images/' + category['name']|lower + '.jpg') }}');">
+
+    <div class="category-overlay">
+        <h3>{{ category["name"] }}</h3>
+        <p>View {{ category["name"] }} exercises →</p>
+    </div>
+
+</a>
+
+
+            {% endfor %}
+
+        </div>
+
+    </main>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+
+</html>

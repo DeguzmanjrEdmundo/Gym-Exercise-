@@ -1,0 +1,64 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reminder Settings - GymBuhdy</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Workout Reminder Settings</h1>
+
+        <p>
+            Choose when you want to receive your daily Gmail workout reminder.
+        </p>
+
+        {% if message %}
+            <p>{{ message }}</p>
+        {% endif %}
+
+        <form method="POST" action="{{ url_for('reminder_settings') }}">
+            <label for="reminder_time">Daily reminder time:</label>
+
+            <input
+                type="time"
+                id="reminder_time"
+                name="reminder_time"
+                value="{{ reminder_time }}"
+                required
+            >
+
+            <br><br>
+
+            <label for="reminder_enabled">
+                Daily Gmail reminders:
+            </label>
+
+            <select id="reminder_enabled" name="reminder_enabled">
+                <option value="1" {% if reminder_enabled %}selected{% endif %}>
+                    ON
+                </option>
+                <option value="0" {% if not reminder_enabled %}selected{% endif %}>
+                    OFF
+                </option>
+            </select>
+
+            <br><br>
+
+            <button type="submit">Save Reminder Settings</button>
+        </form>
+
+        <p>
+            <a href="{{ url_for('my_workout') }}">Back to My Workout</a>
+        </p>
+
+        <p>
+            <a href="{{ url_for('home') }}">Back to Home</a>
+        </p>
+    </div>
+</body>
+</html>
+

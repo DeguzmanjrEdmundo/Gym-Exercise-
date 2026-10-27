@@ -1,0 +1,14 @@
+import sqlite3
+
+connection = sqlite3.connect("gym.db")
+
+connection.execute("""
+    DELETE FROM categories
+    WHERE id > 6
+""")
+
+connection.commit()
+
+connection.close()
+
+print("Duplicate categories deleted successfully!")

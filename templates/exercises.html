@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ category["name"] }} Exercises</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+    <header>
+
+        <h1>{{ category["name"] }} Exercises</h1>
+
+        <p>Exercises for the {{ category["name"] }} muscle group</p>
+
+    </header>
+
+    <main>
+
+        <a href="{{ url_for('home') }}">← Back to Muscle Groups</a>
+
+        <h2>Exercises</h2>
+
+        <div class="exercise-list">
+
+            {% for exercise in exercises %}
+
+            <div class="exercise">
+
+                <h3>
+                    <a href="{{ url_for('exercise_detail', exercise_id=exercise['id']) }}">
+                        {{ exercise["name"] }}
+                    </a>
+                </h3>
+
+                <p>
+                    <strong>Primary Muscle:</strong>
+                    {{ exercise["primary_muscle"] }}
+                </p>
+
+                <p>
+                    <strong>Equipment:</strong>
+                    {{ exercise["equipment"] }}
+                </p>
+
+                <p>
+                    <strong>Difficulty:</strong>
+                    {{ exercise["difficulty"] }}
+                </p>
+
+                <a class="info-button"
+                   href="{{ url_for('exercise_detail', exercise_id=exercise['id']) }}">
+                    View Exercise
+                </a>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </main>
+
+</body>
+
+</html>
